@@ -2,24 +2,29 @@ import React, { useState } from 'react'
 import './App.css'
 
 function App (props) {
-  const [name, setName] = useState(props.name)
-  const [price, setPrice] = useState(props.price)
+  const [state, setState] = useState(props)
 
   return (
     <div>
       <p>
-        現在の{name}は{price}です。
+        現在の{state.name}は{state.price}です。
       </p>
-      <button onClick={() => setPrice(price + 100)}>+100</button>
-      <button onClick={() => setPrice(price - 100)}>-100</button>
-      <button onClick={() => setPrice(props.price)}>reset</button>
+      <button onClick={() => setState({ ...state, price: state.price + 100 })}>
+        +100
+      </button>
+      <button onClick={() => setState({ ...state, price: state.price - 100 })}>
+        -100
+      </button>
+      <button onClick={() => setState(props)}>reset</button>
       <input
-        value={name}
+        value={state.name}
         onChange={event => {
-          setName(event.target.value)
+          setState({ ...state, name: event.target.value })
         }}
       />
-      <button onClick={() => setName(props.name)}>Namereset</button>
+      <button onClick={() => setState({ ...state, name: props.name })}>
+        Namereset
+      </button>
     </div>
   )
 }
