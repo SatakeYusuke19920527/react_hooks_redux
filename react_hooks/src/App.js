@@ -1,8 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
 
 function App (props) {
+  const [name, setName] = useState(props.name)
   const [state, setState] = useState(props)
+
+  useEffect(() => {
+    console.log('this is like componentDidMount or componentDidUpdate')
+  })
+
+  useEffect(() => {
+    console.log('this is like componentDidMount')
+  }, [])
+
+  useEffect(() => {
+    console.log('this callback is for name only')
+  }, [name])
 
   return (
     <div>
@@ -19,7 +32,7 @@ function App (props) {
       <input
         value={state.name}
         onChange={event => {
-          setState({ ...state, name: event.target.value })
+          setName(event.target.value)
         }}
       />
       <button onClick={() => setState({ ...state, name: props.name })}>
