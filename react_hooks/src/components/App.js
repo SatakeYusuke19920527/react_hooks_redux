@@ -43,7 +43,7 @@ function App () {
           </tr>
           <tr>
             <th scope="row">3</th>
-            <td colspan="1">Larry the Bird</td>
+            <td colSpan="1">Larry the Bird</td>
             <td>@twitter</td>
           </tr>
         </tbody>
