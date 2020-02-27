@@ -4,10 +4,13 @@ import React from 'react';
 const Event = ({event, dispatch}) => {
     const id = event.id
     const handleClickDeleteButton = () => {
-        dispatch({
-            type: 'DELETE_EVENT',
-            id
-        })
+        const result = window.confirm(`id=[${event.id}] を削除してもいいですか？`);
+        if (result === true) {
+            dispatch({
+                type: 'DELETE_EVENT',
+                id
+            })
+        }
     };
 
     return (

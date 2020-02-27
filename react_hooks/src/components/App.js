@@ -22,10 +22,26 @@ function App() {
     setBody('')
   }
 
-  const deleteAll = () => {
-    dispatch({
+  const deleteAllEvents = () => {
+    const result = window.confirm("本当に全て削除してもいいですか？");
+    
+    if (result === true) {
+      dispatch({
         type: 'DELETE_ALL_EVENT',
-    })
+      })
+    } else {
+      return state;
+    }
+  }
+
+  const buttonDisableCreateEvent = () => {
+    const disabled = title === '' || body === ''
+    return disabled
+  }
+
+  const buttonDisableDeleteEvents = () => {
+    const disabled = state.length === 0;
+    return disabled;
   }
 
   return (
@@ -41,8 +57,8 @@ function App() {
           <textarea type="password" className="form-control" id="formEventTitle" value={body} onChange={e => setBody(e.target.value)}/>
         </div>
 
-        <button type="button" className="btn btn-primary" onClick={() => {addEvent()}}>イベント作成</button>
-        <button type="button" className="btn btn-danger" onClick={() => {deleteAll()}}>全てのイベントを削除</button>
+        <button type="button" className="btn btn-primary" disabled={buttonDisableCreateEvent()} onClick={() => {addEvent()}}>イベント作成</button>
+        <button type="button" className="btn btn-danger" disabled={buttonDisableDeleteEvents()} onClick={() => {deleteAllEvents()}}>全てのイベントを削除</button>
 
       </form>
       <h4>イベント一覧</h4>
