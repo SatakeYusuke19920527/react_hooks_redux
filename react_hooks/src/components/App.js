@@ -1,82 +1,17 @@
-import React, {useReducer, useState} from 'react'
+import React, {useReducer} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Event from './Event';
+import Events from './Events';
+import EventForm from './EventForm';
 import reducer from '../reducers/index';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, []);
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-
-
-  const addEvent = () => {
-
-    dispatch({
-        type: 'CREATE_EVENT',
-        title,
-        body
-    })
-    
-    setTitle('')
-    setBody('')
-  }
-
-  const deleteAllEvents = () => {
-    const result = window.confirm("本当に全て削除してもいいですか？");
-    
-    if (result === true) {
-      dispatch({
-        type: 'DELETE_ALL_EVENT',
-      })
-    } else {
-      return state;
-    }
-  }
-
-  const buttonDisableCreateEvent = () => {
-    const disabled = title === '' || body === ''
-    return disabled
-  }
-
-  const buttonDisableDeleteEvents = () => {
-    const disabled = state.length === 0;
-    return disabled;
-  }
 
   return (
-  <div className="container-fluid">
-      <h4>イベント作成フォーム</h4>
-      <form>
-        <div className="form-group">
-          <label htmlFor="formEventTitle">Email address</label>
-          <input type="email" className="form-control" id="formEventTitle" value={title} onChange={e => setTitle(e.target.value)}/>
-        </div>
-        <div className="form-group">
-          <label htmlFor="formEventTitle">Body</label>
-          <textarea type="password" className="form-control" id="formEventTitle" value={body} onChange={e => setBody(e.target.value)}/>
-        </div>
-
-        <button type="button" className="btn btn-primary" disabled={buttonDisableCreateEvent()} onClick={() => {addEvent()}}>イベント作成</button>
-        <button type="button" className="btn btn-danger" disabled={buttonDisableDeleteEvents()} onClick={() => {deleteAllEvents()}}>全てのイベントを削除</button>
-
-      </form>
-      <h4>イベント一覧</h4>
-      <table className="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">タイトル</th>
-            <th scope="col">ボディー</th>
-            <th scope="col">削除</th>
-          </tr>
-        </thead>
-        <tbody>
-          {state.map((event, index) => (
-            <Event key={index} event={event} dispatch={dispatch} />
-          ))}
-        </tbody>
-      </table>
+    <div className="container-fluid">
+      <EventForm state={state} dispatch={dispatch} />
+      <Events state={state} dispatch={dispatch} />
     </div>
   );
 }
